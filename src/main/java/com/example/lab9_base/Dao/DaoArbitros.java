@@ -48,22 +48,50 @@ public class DaoArbitros extends BaseDao {
     }
 
     public ArrayList<Arbitro> busquedaPais(String pais) {
-
         ArrayList<Arbitro> arbitros = new ArrayList<>();
-        /*
-        Inserte su código aquí
-        */
+        String sql = "select * from arbitro where pais like ?";
+
+        try(Connection conn = this.getConnection();
+            PreparedStatement pstmt1 = conn.prepareStatement(sql);){
+            pstmt1.setString(1,"%"+pais+"%");
+            try(ResultSet rs = pstmt1.executeQuery();){
+                while(rs.next()){
+                    Arbitro arbitros1 = new Arbitro();
+                    arbitros1.setIdArbitro(rs.getInt("idArbitro"));
+                    arbitros1.setNombre(rs.getString("nombre"));
+                    arbitros1.setPais(rs.getString("pais"));
+                    arbitros.add(arbitros1);
+                }}
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
         return arbitros;
     }
 
     public ArrayList<Arbitro> busquedaNombre(String nombre) {
 
-        ArrayList<Arbitro> arbitros = new ArrayList<>();
-        /*
-        Inserte su código aquí
-        */
-        return arbitros;
+
+        String sql = "select * from arbitro where nombre like ?";
+        ArrayList<Arbitro> listaarbitros = new ArrayList<>();
+        try(Connection conn = this.getConnection();
+            PreparedStatement pstmt1 = conn.prepareStatement(sql);){
+            pstmt1.setString(1,"%"+nombre+"%");
+            try(ResultSet rs = pstmt1.executeQuery();){
+                while(rs.next()){
+                    Arbitro arbitros = new Arbitro();
+                    arbitros.setIdArbitro(rs.getInt("idArbitro"));
+                    arbitros.setNombre(rs.getString("nombre"));
+                    arbitros.setPais(rs.getString("pais"));
+                    listaarbitros.add(arbitros);
+                }}
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return listaarbitros;
     }
+
+
 
     public Arbitro buscarArbitro(int id) {
         Arbitro arbitro = new Arbitro();
@@ -74,8 +102,29 @@ public class DaoArbitros extends BaseDao {
     }
 
     public void borrarArbitro(int id) {
-        /*
-        Inserte su código aquí
-        */
+
+        String sql = "UPDATE partido SET arbitro = null WHERE arbitro = ?";
+        String sql1 = "delete from arbitro where idArbitro= ?";
+
+
+        try (Connection connb = this.getConnection();
+             PreparedStatement pstmtb = connb.prepareStatement(sql);) {
+
+            pstmtb.setInt(1,id);
+            pstmtb.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try (Connection connd = this.getConnection();
+             PreparedStatement pstmtd = connd.prepareStatement(sql1)) {
+
+            pstmtd.setInt(1,id);
+            pstmtd.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

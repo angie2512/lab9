@@ -1,6 +1,9 @@
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
+<%
+    ArrayList<String> listaOpciones = (ArrayList <String>) request.getAttribute("listaPaises");
+%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -17,14 +20,38 @@
                     <jsp:include page="../includes/navbar.jsp"/>
                     <h1 class='mb-3'>Crear un Árbitro</h1>
                     <form method="POST" action="<%=request.getContextPath()%>/ArbitroServlet?action=guardar">
+                        <div class="row g-2">
+                            <% if(session.getAttribute("infotodo")!=null){
+                                if(session.getAttribute("infotodo").equals("error al crear")) {%>
+                            <div class="alert alert-danger" role="alert">
+                                Hubo un error al crear el árbitro
+                            </div>
+                            <%session.removeAttribute("infotodo");%>
+                            <%}}%>
+                        </div>
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input type="text" class="form-control" name="nombre">
+                            <input type="text" class="form-control" name="nombre" required>
+                        </div>
+                        <div class="row g-2">
+                            <% if(session.getAttribute("infotodo")!=null){
+                               if(session.getAttribute("infotodo").equals("nombre vacio")) {%>
+                                <div class="alert alert-danger" role="alert">
+                                    Falta ingresar nombre
+                                </div>
+                              <%}else if(session.getAttribute("infotodo").equals("nombre repetido")){%>
+                                    <div class="alert alert-danger" role="alert">
+                                        El nombre ingresado ya se encuentra registrado
+                                   </div>
+                              <%}}%>
+                            <%session.removeAttribute("infotodo");%>
                         </div>
                         <div class="form-group">
                             <label>País</label>
-                            <select name="pais" class="form-control">
-
+                            <select name="pais" class="form-control" required>
+                                <% for(String opcion : listaOpciones){%>
+                                <option value="<%=opcion%>"><%=opcion%></option>
+                                <% } %>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar</button>

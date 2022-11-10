@@ -4,7 +4,7 @@
 
 <%
     ArrayList<Arbitro> listaArbitros = (ArrayList <Arbitro>) request.getAttribute("ListaArbitros");
-
+    ArrayList<String> listaOpciones = (ArrayList <String>) request.getAttribute("Opciones");
 %>
 
 <html>
@@ -26,7 +26,11 @@
                 </div>
                 <form method="post" action="<%= request.getContextPath()%>/ArbitroServlet?action=buscar" class="row">
                     <div class="col-lg-3">
+
                         <select name="tipo" class="form-control">
+                            <% for(String opcion : listaOpciones){%>
+                            <option value="<%=opcion%>"><%=opcion%></option>
+                            <% } %>
                             <%--                    ACA DEBE COLOCAR LA LISTA DE OPCIONES MOSTRADAS EN EL SERVLET--%>
                         </select>
                     </div>
@@ -50,21 +54,18 @@
                     <th></th>
                 </tr>
                 <tbody>
-                <% int i = 1;
-                for (Arbitro arbitro1 : listaArbitros){ %>
+                <% for (Arbitro arbitro1 : listaArbitros){ %>
                 <tr>
                     <td><%=arbitro1.getIdArbitro()%></td>
                     <td><%=arbitro1.getNombre()%></td>
                     <td><%=arbitro1.getPais()%></td>
                     <td>
-                        <a href="<%=request.getContextPath()%>/ArbitroServlet?action=borrar&id=">
+                        <a href="<%=request.getContextPath()%>/ArbitroServlet?action=borrar&id=<%=arbitro1.getIdArbitro()%>">
                             Borrar
                         </a>
                     </td>
-                </tr>
-                    <% i++;
-                }
-                %>
+                </tr><% }%>
+                </tbody>
             </table>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
