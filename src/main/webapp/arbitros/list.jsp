@@ -26,8 +26,12 @@
                 </div>
                 <form method="post" action="<%= request.getContextPath()%>/ArbitroServlet?action=buscar" class="row">
                     <div class="col-lg-3">
-                        <select name="tipo" class="form-control">
 
+                        <select name="tipo" class="form-control">
+                            <% for(Arbitro nombre : busquedaNombres){%>
+                            <option value="<%=seleccion_local.getIdSeleccion()%>"><%=seleccion_local.getNombre()%>
+                            </option>
+                            <% } %>
                             <option value="1">nombre</option>
                             <option value="2">país</option>
                             <%--                    ACA DEBE COLOCAR LA LISTA DE OPCIONES MOSTRADAS EN EL SERVLET--%>
@@ -57,7 +61,6 @@
                 <tr>
                     <td><%=arbitro1.getIdArbitro()%></td>
                     <td><%=arbitro1.getNombre()%></td>
-
                     <td><%=arbitro1.getPais()%></td>
                     <td>
                         <a href="<%=request.getContextPath()%>/ArbitroServlet?action=borrar&id=<%=arbitro1.getIdArbitro()%>">

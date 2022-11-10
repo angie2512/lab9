@@ -29,11 +29,18 @@ public class ArbitroServlet extends HttpServlet {
                 /*
                 Inserte su código aquí
                 */
-                String buscar = request.getParameter("keyword");
-                ArrayList<Arbitro> listaArbitros =arbitrosDao1.busquedaNombre(buscar);
-                request.setAttribute("ListaArbitros",listaArbitros);
+                String tipo = request.getParameter("tipo");
+                String buscar = request.getParameter("buscar");
+
+                if(tipo.equals("1")){
+                ArrayList<Arbitro> listaArbitros = arbitrosDao1.busquedaNombre(buscar);
+                request.setAttribute("ListaArbitros", listaArbitros);
                 view = request.getRequestDispatcher("arbitros/list.jsp");
-                view.forward(request,response);
+                view.forward(request, response);
+                }else{
+
+
+            }
                 break;
 
             case "guardar":

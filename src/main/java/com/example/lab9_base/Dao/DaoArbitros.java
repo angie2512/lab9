@@ -72,10 +72,6 @@ public class DaoArbitros extends BaseDao {
     public ArrayList<Arbitro> busquedaNombre(String nombre) {
 
 
-        /*
-        Inserte su código aquí
-        */
-
         String sql = "select * from arbitro where nombre like ?";
         ArrayList<Arbitro> listaarbitros = new ArrayList<>();
         try(Connection conn = this.getConnection();
