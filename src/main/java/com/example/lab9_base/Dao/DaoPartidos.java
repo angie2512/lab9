@@ -71,11 +71,47 @@ public class DaoPartidos extends BaseDao{
         try (Connection connection2 = this.getConnection();
              PreparedStatement pstmt = connection2.prepareStatement(sql)) {
 
-            pstmt.setInt(1, partido.getSeleccionLocal().getIdSeleccion());
-            pstmt.setInt(2, partido.getSeleccionVisitante().getIdSeleccion());
-            pstmt.setInt(3, partido.getArbitro().getIdArbitro());
-            pstmt.setString(4, partido.getFecha());
-            pstmt.setInt(5, partido.getNumeroJornada());
+            if (partido.getSeleccionLocal().getIdSeleccion() == 0){
+                pstmt.setNull(1,Types.INTEGER);
+            }
+            else{
+                pstmt.setInt(1, partido.getSeleccionLocal().getIdSeleccion());
+            }
+
+            if (partido.getSeleccionVisitante().getIdSeleccion() == 0){
+                pstmt.setNull(2,Types.INTEGER);
+            }
+            else{
+                pstmt.setInt(2, partido.getSeleccionVisitante().getIdSeleccion());
+            }
+
+
+            if (partido.getArbitro().getIdArbitro() == 0){
+                pstmt.setNull(3,Types.INTEGER);
+            }
+            else{
+                pstmt.setInt(3, partido.getArbitro().getIdArbitro());
+            }
+
+
+
+            if (partido.getFecha() == null){
+                pstmt.setNull(4,Types.DATE);
+            }
+            else{
+                pstmt.setString(4, partido.getFecha());
+            }
+
+
+            if (partido.getNumeroJornada() == 0){
+                pstmt.setNull(5,Types.INTEGER);
+            }
+            else{
+                pstmt.setInt(5, partido.getNumeroJornada());
+            }
+
+
+
 
             pstmt.executeUpdate();
 
