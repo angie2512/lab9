@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -6,10 +8,13 @@
         <title>LAB 9</title>
     </head>
     <body>
+
+
         <div class='container'>
             <div class="row mb-4">
                 <div class="col"></div>
                 <div class="col-md-6">
+                    <jsp:include page="../includes/navbar.jsp"/>
                     <h1 class='mb-3'>Crear un Árbitro</h1>
                     <form method="POST" action="<%=request.getContextPath()%>/ArbitroServlet?action=guardar">
                         <div class="form-group">

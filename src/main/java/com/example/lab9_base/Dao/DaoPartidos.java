@@ -4,7 +4,7 @@ import com.example.lab9_base.Bean.Partido;
 
 import java.util.ArrayList;
 
-public class DaoPartidos {
+public class DaoPartidos extends BaseDao {
     public ArrayList<Partido> listaDePartidos() {
 
         ArrayList<Partido> partidos = new ArrayList<>();

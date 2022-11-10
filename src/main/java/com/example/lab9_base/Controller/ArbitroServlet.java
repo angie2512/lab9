@@ -1,5 +1,6 @@
 package com.example.lab9_base.Controller;
 
+import com.example.lab9_base.Dao.DaoArbitros;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -39,6 +40,8 @@ public class ArbitroServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String action = request.getParameter("action") == null ? "lista" : request.getParameter("action");
+        DaoArbitros arbitrodao = new DaoArbitros();
+
         RequestDispatcher view;
         ArrayList<String> paises = new ArrayList<>();
         paises.add("Peru");
@@ -53,11 +56,7 @@ public class ArbitroServlet extends HttpServlet {
 
         switch (action) {
             case "lista":
-                /*
-                Inserte su código aquí
-                 */
-                view = request.getRequestDispatcher("/arbitros/list.jsp");
-                view.forward(request, response);
+
                 break;
             case "crear":
                 /*

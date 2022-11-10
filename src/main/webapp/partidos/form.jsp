@@ -10,6 +10,7 @@
             <div class="row mb-4">
                 <div class="col"></div>
                 <div class="col-md-6">
+                    <jsp:include page="../includes/navbar.jsp"/>
                     <h1 class='mb-3'>Crear un Partido de Clasificatorias</h1>
                     <form method="POST" action="<%=request.getContextPath()%>/PartidoServlet?action=guardar">
                         <div class="form-group">

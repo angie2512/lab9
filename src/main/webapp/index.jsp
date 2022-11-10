@@ -7,9 +7,11 @@
         <title>LAB 9</title>
     </head>
     <body>
+
         <div class='container'>
             <div class="row mb-5 mt-4">
                 <div class="col-lg-6">
+                    <jsp:include page="includes/navbar.jsp"/>
                     <h1 class=''>Lista de Partidos</h1>
                 </div>
                 <div class="col-lg-6 my-auto text-lg-right">
