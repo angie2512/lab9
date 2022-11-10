@@ -44,7 +44,7 @@ public class PartidoServlet extends HttpServlet {
                 request.setAttribute("lista", daoPartidos.listaDePartidos());
 
 
-                view = request.getRequestDispatcher("index.jsp");
+                view = request.getRequestDispatcher("index2.jsp");
                 view.forward(request, response);
                 break;
             case "crear":
