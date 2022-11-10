@@ -1,11 +1,13 @@
 package com.example.lab9_base.Controller;
 
+import com.example.lab9_base.Bean.Arbitro;
 import com.example.lab9_base.Dao.DaoArbitros;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet(name = "ArbitroServlet", urlPatterns = {"/ArbitroServlet"})
@@ -18,6 +20,8 @@ public class ArbitroServlet extends HttpServlet {
         ArrayList<String> opciones = new ArrayList<>();
         opciones.add("nombre");
         opciones.add("pais");
+        DaoArbitros arbitrosDao1 = new DaoArbitros();
+
 
         switch (action) {
 
@@ -25,12 +29,27 @@ public class ArbitroServlet extends HttpServlet {
                 /*
                 Inserte su código aquí
                 */
+                String buscar = request.getParameter("keyword");
+                ArrayList<Arbitro> listaArbitros =arbitrosDao1.busquedaNombre(buscar);
+                request.setAttribute("ListaArbitros",listaArbitros);
+                view = request.getRequestDispatcher("arbitros/list.jsp");
+                view.forward(request,response);
                 break;
 
             case "guardar":
-                /*
-                Inserte su código aquí
-                */
+                String nombre = request.getParameter("nombre");
+                String pais = request.getParameter("pais");
+                try{
+                    Arbitro newarbitro = new Arbitro();
+                    newarbitro.setNombre(nombre);
+                    newarbitro.setPais(pais);
+                    arbitrosDao1.crearArbitro(newarbitro);
+                    response.sendRedirect(request.getContextPath() + "/ArbitroServlet?");
+                } catch (NumberFormatException e) {
+                    response.sendRedirect(request.getContextPath() + "/ArbitroServlet?accion=crear");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
 
         }
@@ -51,6 +70,7 @@ public class ArbitroServlet extends HttpServlet {
         paises.add("Paraguay");
         paises.add("Uruguay");
         paises.add("Colombia");
+
         ArrayList<String> opciones = new ArrayList<>();
         opciones.add("nombre");
         opciones.add("pais");
@@ -73,6 +93,15 @@ public class ArbitroServlet extends HttpServlet {
                 /*
                 Inserte su código aquí
                 */
+                String spell = request.getParameter("id");
+                try{
+                    int spelli = Integer.parseInt(spell);
+                    arbitrodao.borrarArbitro(spelli);
+                    response.sendRedirect(request.getContextPath()+"/ArbitroServlet");
+
+                }catch (NumberFormatException e){
+                    response.sendRedirect(request.getContextPath()+ "/ArbitroServlet");
+                }
                 break;
         }
     }

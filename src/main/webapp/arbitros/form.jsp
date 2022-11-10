@@ -17,15 +17,44 @@
                     <jsp:include page="../includes/navbar.jsp"/>
                     <h1 class='mb-3'>Crear un Árbitro</h1>
                     <form method="POST" action="<%=request.getContextPath()%>/ArbitroServlet?action=guardar">
+                        <div class="row g-2">
+                            <% if(session.getAttribute("infotodo")!= null) {%>
+                            <div class="alert alert-danger" role="alert">
+                                <%=session.getAttribute("infotodo")%>
+                            </div>
+                            <%session.removeAttribute("infotodo");%>
+                            <%}%>
+                        </div>
                         <div class="form-group">
                             <label>Nombre</label>
                             <input type="text" class="form-control" name="nombre">
                         </div>
+                        <div class="row g-2">
+                            <% if(session.getAttribute("infonombre")!= null) {%>
+                            <div class="alert alert-danger" role="alert">
+                                <%=session.getAttribute("infonombre")%>
+                            </div>
+                            <%session.removeAttribute("infonombre");%>
+                            <%}%>
+                        </div>
                         <div class="form-group">
                             <label>País</label>
                             <select name="pais" class="form-control">
-
+                                <option value="1">Perú</option>
+                                <option value="2">Chile</option>
+                                <option value="3">Argentina</option>
+                                <option value="1">Paraguay</option>
+                                <option value="2">Uruguay</option>
+                                <option value="3">Colombia</option>
                             </select>
+                        </div>
+                        <div class="row g-2">
+                            <% if(session.getAttribute("infopais")!= null) {%>
+                            <div class="alert alert-danger" role="alert">
+                                <%=session.getAttribute("infopais")%>
+                            </div>
+                            <%session.removeAttribute("infopais");%>
+                            <%}%>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                         <a href="<%= request.getContextPath()%>/ArbitroServlet" class="btn btn-danger">Cancelar</a>
