@@ -8,29 +8,22 @@ import com.example.lab9_base.Bean.Seleccion;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DaoPartidos {
+public class DaoPartidos extends BaseDao{
     public ArrayList<Partido> listaDePartidos() {
 
-        ArrayList<Partido> partidos = new ArrayList<>();
 
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        String url = "jdbc:mysql://localhost:3306/lab9";
         ArrayList<Partido> lista = new ArrayList<>();
+
+
         String sql = "select p.numeroJornada, p.fecha, s.nombre as SeleccionLocal, s2.nombre as SeleccionVisitante, e.nombre as NombreEstadio, a.nombre as nombreArbitro  \n" +
                 "from partido p, seleccion s, seleccion s2, estadio e, arbitro a\n" +
                 "where s.idseleccion = p.seleccionLocal\n" +
                 "and s2.idseleccion = p.seleccionVisitante \n" +
                 "and e.idEstadio = s.estadio_idEstadio \n" +
                 "and a.idArbitro = p.arbitro";
-        try (Connection connection = DriverManager.getConnection(url, "root", "123456");
+        try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql);) {
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 Partido partido = new Partido();
@@ -67,12 +60,29 @@ public class DaoPartidos {
             throw new RuntimeException(e);
         }
 
-        /*public void crearPartido(Partido partido) {
-
-         *//*
-        Inserte su cÃ³digo aquÃ­
-        *//*
-    }*/
     }
+
+
+    public void crearPartido(Partido partido){
+
+
+        String sql = "INSERT INTO partido (seleccionLocal, seleccionVisitante, arbitro,fecha,numeroJornada) VALUES (?,?,?,?,?)";
+
+        try (Connection connection2 = this.getConnection();
+             PreparedStatement pstmt = connection2.prepareStatement(sql)) {
+
+            pstmt.setInt(1, partido.getSeleccionLocal().getIdSeleccion());
+            pstmt.setInt(2, partido.getSeleccionVisitante().getIdSeleccion());
+            pstmt.setInt(3, partido.getArbitro().getIdArbitro());
+            pstmt.setString(4, partido.getFecha());
+            pstmt.setInt(5, partido.getNumeroJornada());
+
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
