@@ -56,13 +56,15 @@
                     <td><%=arbitro1.getIdArbitro()%></td>
                     <td><%=arbitro1.getNombre()%></td>
                     <td><%=arbitro1.getPais()%></td>
-                    <%}%>
                     <td>
                         <a href="<%=request.getContextPath()%>/ArbitroServlet?action=borrar&id=">
                             Borrar
                         </a>
                     </td>
                 </tr>
+                    <% i++;
+                }
+                %>
             </table>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

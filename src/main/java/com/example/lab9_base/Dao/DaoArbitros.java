@@ -2,10 +2,7 @@ package com.example.lab9_base.Dao;
 
 import com.example.lab9_base.Bean.Arbitro;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class DaoArbitros extends BaseDao {
@@ -36,10 +33,18 @@ public class DaoArbitros extends BaseDao {
 
 
 
-    public void crearArbitro(Arbitro arbitro) {
-        /*
-        Inserte su código aquí
-        */
+    public void crearArbitro(Arbitro arbitro) throws SQLException {
+        String sql = "insert into arbitro (idArbitro,nombre,pais) values (?,?,?)";
+
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, arbitro.getIdArbitro());
+            pstmt.setString(2,arbitro.getNombre());
+            pstmt.setString(3,arbitro.getPais());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ArrayList<Arbitro> busquedaPais(String pais) {

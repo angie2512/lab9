@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,6 +29,7 @@
                     <th>Estadio a jugar</th>
                     <th>Árbitro</th>
                 </tr>
+
 
                 <tr>
                     <td></td>

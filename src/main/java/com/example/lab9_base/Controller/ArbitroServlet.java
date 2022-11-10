@@ -66,7 +66,8 @@ public class ArbitroServlet extends HttpServlet {
                 /*
                 Inserte su código aquí
                 */
-
+                view = request.getRequestDispatcher("/arbitros/form.jsp");
+                view.forward(request,response);
                 break;
             case "borrar":
                 /*

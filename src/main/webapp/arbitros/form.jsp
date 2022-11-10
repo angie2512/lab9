@@ -24,7 +24,7 @@
                         <div class="form-group">
                             <label>País</label>
                             <select name="pais" class="form-control">
-                                <%--  COLOCAR LISTA DE PAÍSES BRINDADA EN EL SERVLET--%>
+
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar</button>
