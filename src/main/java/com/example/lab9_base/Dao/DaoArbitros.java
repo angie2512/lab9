@@ -9,8 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DaoArbitros extends BaseDao {
+
     public ArrayList<Arbitro> listarArbitros() {
-        ArrayList<Arbitro> arbitros = new ArrayList<>();
+        ArrayList<Arbitro> listaArbitros = new ArrayList<>();
         String sql = "select * from arbitro";
         /*
         Inserte su código aquí
@@ -23,13 +24,13 @@ public class DaoArbitros extends BaseDao {
                 arbitro.setIdArbitro(rs.getInt("idArbitro"));
                 arbitro.setNombre(rs.getString("nombre"));
                 arbitro.setPais(rs.getString("pais"));
-                arbitros.add(arbitro);
+                listaArbitros.add(arbitro);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        return arbitros;
+        return listaArbitros;
     }
 
 

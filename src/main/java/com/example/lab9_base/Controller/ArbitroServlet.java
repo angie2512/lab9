@@ -43,6 +43,7 @@ public class ArbitroServlet extends HttpServlet {
         DaoArbitros arbitrodao = new DaoArbitros();
 
         RequestDispatcher view;
+
         ArrayList<String> paises = new ArrayList<>();
         paises.add("Peru");
         paises.add("Chile");
@@ -56,8 +57,11 @@ public class ArbitroServlet extends HttpServlet {
 
         switch (action) {
             case "lista":
-
+                request.setAttribute("ListaArbitros", arbitrodao.listarArbitros());
+                view = request.getRequestDispatcher("arbitros/list.jsp");
+                view.forward(request, response);
                 break;
+
             case "crear":
                 /*
                 Inserte su código aquí
