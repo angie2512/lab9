@@ -1,6 +1,9 @@
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
+<%
+    ArrayList<String> listaOpciones = (ArrayList <String>) request.getAttribute("listaPaises");
+%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,43 +21,38 @@
                     <h1 class='mb-3'>Crear un Árbitro</h1>
                     <form method="POST" action="<%=request.getContextPath()%>/ArbitroServlet?action=guardar">
                         <div class="row g-2">
-                            <% if(session.getAttribute("infotodo")!= null) {%>
+                            <% if(session.getAttribute("infotodo")!=null){
+                                if(session.getAttribute("infotodo").equals("error al crear")) {%>
                             <div class="alert alert-danger" role="alert">
-                                <%=session.getAttribute("infotodo")%>
+                                Hubo un error al crear el árbitro
                             </div>
                             <%session.removeAttribute("infotodo");%>
-                            <%}%>
+                            <%}}%>
                         </div>
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input type="text" class="form-control" name="nombre">
+                            <input type="text" class="form-control" name="nombre" required>
                         </div>
                         <div class="row g-2">
-                            <% if(session.getAttribute("infonombre")!= null) {%>
-                            <div class="alert alert-danger" role="alert">
-                                <%=session.getAttribute("infonombre")%>
-                            </div>
-                            <%session.removeAttribute("infonombre");%>
-                            <%}%>
+                            <% if(session.getAttribute("infotodo")!=null){
+                               if(session.getAttribute("infotodo").equals("nombre vacio")) {%>
+                                <div class="alert alert-danger" role="alert">
+                                    Falta ingresar nombre
+                                </div>
+                              <%}else if(session.getAttribute("infotodo").equals("nombre repetido")){%>
+                                    <div class="alert alert-danger" role="alert">
+                                        El nombre ingresado ya se encuentra registrado
+                                   </div>
+                              <%}}%>
+                            <%session.removeAttribute("infotodo");%>
                         </div>
                         <div class="form-group">
                             <label>País</label>
-                            <select name="pais" class="form-control">
-                                <option value="1">Perú</option>
-                                <option value="2">Chile</option>
-                                <option value="3">Argentina</option>
-                                <option value="1">Paraguay</option>
-                                <option value="2">Uruguay</option>
-                                <option value="3">Colombia</option>
+                            <select name="pais" class="form-control" required>
+                                <% for(String opcion : listaOpciones){%>
+                                <option value="<%=opcion%>"><%=opcion%></option>
+                                <% } %>
                             </select>
-                        </div>
-                        <div class="row g-2">
-                            <% if(session.getAttribute("infopais")!= null) {%>
-                            <div class="alert alert-danger" role="alert">
-                                <%=session.getAttribute("infopais")%>
-                            </div>
-                            <%session.removeAttribute("infopais");%>
-                            <%}%>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                         <a href="<%= request.getContextPath()%>/ArbitroServlet" class="btn btn-danger">Cancelar</a>

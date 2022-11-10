@@ -29,33 +29,41 @@ public class ArbitroServlet extends HttpServlet {
                 /*
                 Inserte su código aquí
                 */
+                request.setAttribute("Opciones",opciones);
                 String tipo = request.getParameter("tipo");
                 String buscar = request.getParameter("buscar");
-
-                if(tipo.equals("1")){
-                ArrayList<Arbitro> listaArbitros = arbitrosDao1.busquedaNombre(buscar);
+                ArrayList<Arbitro> listaArbitros = null;
+                if(tipo.equals("nombre")){
+                   listaArbitros = arbitrosDao1.busquedaNombre(buscar);
+                }else{
+                    listaArbitros = arbitrosDao1.busquedaPais(buscar);
+                }
                 request.setAttribute("ListaArbitros", listaArbitros);
                 view = request.getRequestDispatcher("arbitros/list.jsp");
                 view.forward(request, response);
-                }else{
-
-
-            }
                 break;
 
             case "guardar":
                 String nombre = request.getParameter("nombre");
                 String pais = request.getParameter("pais");
-                try{
-                    Arbitro newarbitro = new Arbitro();
-                    newarbitro.setNombre(nombre);
-                    newarbitro.setPais(pais);
-                    arbitrosDao1.crearArbitro(newarbitro);
-                    response.sendRedirect(request.getContextPath() + "/ArbitroServlet?");
-                } catch (NumberFormatException e) {
-                    response.sendRedirect(request.getContextPath() + "/ArbitroServlet?accion=crear");
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                System.out.println(arbitrosDao1.busquedaNombre(nombre).size());
+                if(nombre.isBlank()){
+                    request.getSession().setAttribute("infotodo","nombre vacio");
+                    response.sendRedirect(request.getContextPath() + "/ArbitroServlet?action=crear");
+                }else if(arbitrosDao1.busquedaNombre(nombre).size()==0){
+                    try{
+                        Arbitro newarbitro = new Arbitro();
+                        newarbitro.setNombre(nombre);
+                        newarbitro.setPais(pais);
+                        arbitrosDao1.crearArbitro(newarbitro);
+                        response.sendRedirect(request.getContextPath() + "/ArbitroServlet?");
+                    } catch (NumberFormatException | SQLException e) {
+                        request.getSession().setAttribute("infotodo","error al crear");
+                        response.sendRedirect(request.getContextPath() + "/ArbitroServlet?action=crear");
+                    }
+                }else{
+                    request.getSession().setAttribute("infotodo","nombre repetido");
+                    response.sendRedirect(request.getContextPath() + "/ArbitroServlet?action=crear");
                 }
                 break;
 
@@ -84,6 +92,7 @@ public class ArbitroServlet extends HttpServlet {
 
         switch (action) {
             case "lista":
+                request.setAttribute("Opciones",opciones);
                 request.setAttribute("ListaArbitros", arbitrodao.listarArbitros());
                 view = request.getRequestDispatcher("arbitros/list.jsp");
                 view.forward(request, response);
@@ -93,7 +102,8 @@ public class ArbitroServlet extends HttpServlet {
                 /*
                 Inserte su código aquí
                 */
-                view = request.getRequestDispatcher("/arbitros/form.jsp");
+                request.setAttribute("listaPaises",paises);
+                view = request.getRequestDispatcher("arbitros/form.jsp");
                 view.forward(request,response);
                 break;
             case "borrar":

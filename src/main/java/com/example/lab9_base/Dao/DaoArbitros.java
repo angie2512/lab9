@@ -57,7 +57,7 @@ public class DaoArbitros extends BaseDao {
             try(ResultSet rs = pstmt1.executeQuery();){
                 while(rs.next()){
                     Arbitro arbitros1 = new Arbitro();
-                    arbitros1.setIdArbitro(rs.getInt("idArbitros"));
+                    arbitros1.setIdArbitro(rs.getInt("idArbitro"));
                     arbitros1.setNombre(rs.getString("nombre"));
                     arbitros1.setPais(rs.getString("pais"));
                     arbitros.add(arbitros1);
@@ -80,7 +80,7 @@ public class DaoArbitros extends BaseDao {
             try(ResultSet rs = pstmt1.executeQuery();){
                 while(rs.next()){
                     Arbitro arbitros = new Arbitro();
-                    arbitros.setIdArbitro(rs.getInt("idArbitros"));
+                    arbitros.setIdArbitro(rs.getInt("idArbitro"));
                     arbitros.setNombre(rs.getString("nombre"));
                     arbitros.setPais(rs.getString("pais"));
                     listaarbitros.add(arbitros);

@@ -4,7 +4,7 @@
 
 <%
     ArrayList<Arbitro> listaArbitros = (ArrayList <Arbitro>) request.getAttribute("ListaArbitros");
-
+    ArrayList<String> listaOpciones = (ArrayList <String>) request.getAttribute("Opciones");
 %>
 
 <html>
@@ -28,12 +28,9 @@
                     <div class="col-lg-3">
 
                         <select name="tipo" class="form-control">
-                            <% for(Arbitro nombre : busquedaNombres){%>
-                            <option value="<%=seleccion_local.getIdSeleccion()%>"><%=seleccion_local.getNombre()%>
-                            </option>
+                            <% for(String opcion : listaOpciones){%>
+                            <option value="<%=opcion%>"><%=opcion%></option>
                             <% } %>
-                            <option value="1">nombre</option>
-                            <option value="2">país</option>
                             <%--                    ACA DEBE COLOCAR LA LISTA DE OPCIONES MOSTRADAS EN EL SERVLET--%>
                         </select>
                     </div>
